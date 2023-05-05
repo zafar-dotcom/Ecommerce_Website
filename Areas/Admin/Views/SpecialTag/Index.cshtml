@@ -1,0 +1,81 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@* Etag controller of Admin area  *@
+
+@using OnLineShop.Models;
+@model IEnumerable<SpecialTag_model>
+
+
+<br />
+<div class="row">
+    <div class="col-6">
+        <h2 class="text-info"> Special Tag List </h2>
+    </div>
+    <div class="col-6 text-end">
+        <a asp-action="Create" class="btn btn-info">
+            <i class="fa-solid fa-plus"></i> New Special Tag
+        </a>
+    </div>
+</div>
+<br />
+<div>
+    <table class="table table-striped border">
+        <tr class="table-info">
+            <th>Special tag name</th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Spectag</td>
+
+                <td>
+                    <partial name="_TagButtonPartial" model="@item.Id"></partial>
+                </td>
+
+            </tr>
+        }
+    </table>
+</div>
+
+@*
+    you have to include both js(in view like here following) and css (in _layoyt head) of alertfy 
+    from
+    https://alertifyjs.com/
+*@
+@section scripts{
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <script type="text/javascript">
+        $(
+            function () {
+
+                var showlert = '@TempData["showalert"]';
+                var delalert = '@TempData["delalert"]';
+                if (showlert === "True") {
+                    var save = '@TempData["sptagcreated"]';
+                    if (save != null) {
+                        alertify.success(save);
+                    }
+                }
+                if (delalert === "deletetag") {
+                    var delmssg = '@TempData["delmsg"]';
+                    if (delmssg != null) {
+                        alertify.success(delmssg);
+                    }
+
+
+                }
+
+
+            }
+        )
+    </script>
+        }

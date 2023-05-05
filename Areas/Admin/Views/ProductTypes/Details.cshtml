@@ -1,0 +1,39 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model OnLineShop.Models.Product_Type
+
+<br />
+
+<h2 class="text-info">Product Type Details</h2>
+<form asp-action="Details" method="post">
+    <div class="p-4 border rounded">
+        <div asp-validation-summary="ModelOnly" class="text-danger">
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Producttype"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Producttype" readonly="readonly" class="form-control" />
+            </div>
+            <span asp-validation-for="Producttype" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+           
+            <a asp-action="Edit" class="btn btn-success" asp-route-id="@Model.Id">Edit</a>
+         <a asp-action="Index" class="btn btn-success" >Back to list</a>
+        </div>
+
+    </div>
+
+</form>
+
