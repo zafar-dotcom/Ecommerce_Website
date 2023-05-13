@@ -10,11 +10,13 @@ var services=builder.Services;
 // Add services to the container.
 services.AddScoped<IProductTypes, ProductType>();
 services.AddScoped<ISpecialTag,SpecialTag_implement>();
+services.AddScoped<IProduct, Product>();
+
 
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+   options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
