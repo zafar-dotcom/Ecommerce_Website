@@ -1,13 +1,15 @@
 ﻿@model IEnumerable<OnLineShop.Models.Products>
-
+<head>
+   
+</head>
     <form method="post">
    <div class="row">
         <div class="col-3">
-            <input type="text" class="form-control form-control-sm" name="loweramount" placeholder="Enter Minimum Amount" />
+            <input type="number" class="form-control form-control-sm" name="loweramount" placeholder="Enter Minimum Amount" />
     </div>
 
     <div class="col-3">
-            <input type="text" class="form-control form-control-sm" name="higheramount" placeholder="Enter Higher Amount" />
+            <input type="number" class="form-control form-control-sm" name="higheramount" placeholder="Enter Higher Amount" />
     </div>
     <div class="col-3">
         <input  type="submit" class="btn btn-primary" value="Search"/>
@@ -29,51 +31,74 @@
 </div>
 <br />
 <div>
-    <table class="table table-striped border">
-        <tr class="text-info">
-            <th>
-                @Html.DisplayNameFor(c=>c.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(c=>c.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(c=>c.ProductColor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(c=>c.IsAvailable)
-            </th>
-            <th>
-                @Html.DisplayNameFor(c=>c.ProductType_prop)
-            </th>
-            <th>
-                @Html.DisplayNameFor(c=>c.SpecialTag_prop)
-            </th>
-
-        </tr>
-        @foreach(var item in Model)
-        {
-            <tr >
-                <td>@item.Name</td>
-                <td>@item.Price</td>
-                <td>@item.ProductColor</td>
-                <td>@item.IsAvailable</td>
-                <td>@item.ProductType_prop.Producttype</td>
-                <td>@item.SpecialTag_prop.Spectag</td>
-
-                <td>
-                    <partial name="_ButtonPartialProduct" model="@item.Id"></partial>                    
-                </td>
+    <table class="table table-striped border display" id="myTable" >
+       
+        <thead>
+            <tr class="text-info">
+                <th>
+                    @Html.DisplayNameFor(c=>c.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(c=>c.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(c=>c.ProductColor)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(c=>c.IsAvailable)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(c=>c.ProductType_prop)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(c=>c.SpecialTag_prop)
+                </th>
+                <th></th>
+                <th></th>
             </tr>
-        }
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Price</td>
+                    <td>@item.ProductColor</td>
+                    <td>@item.IsAvailable</td>
+                    <td>@item.ProductType_prop.Producttype</td>
+                    <td>@item.SpecialTag_prop.Spectag</td>
+
+                   <td>
+                        <partial name="_ButtonPartialProduct" model="@item.Id"></partial>
+                    </td>
+                </tr>
+            }
+        </tbody>
+      
     </table>
 </div>
 
 @section scripts{
-    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    
     <script type="text/javascript">
-        $(
-            function () {
+
+        $(document).ready(function () {
+            let table = $('#myTable').DataTable(
+                {
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+                }
+            );
+        });
+            //$(document).ready(function () {
+            //   let table = $('#myTable').DataTable();
+            //});
+
+        
+        
+        $( function () {
 
                 var succ = '@TempData["delsuccalert"]';
                 var fail = '@TempData["delfailalert"]';
@@ -84,12 +109,14 @@
                     var pro_update_fail = '@TempData["updatedfail"]';
                     if(pro_update_fail!=null){
                         alertify.error(pro_update_fail);
+                   
                     }
                 }
                 if (updatedalert == "updated"){
                     var pro_update = '@TempData["updated"]';
                     if(pro_update!=null){
                         alertify.success(pro_update);
+                    
                     }
                 }
                 if (productcreated == "created"){

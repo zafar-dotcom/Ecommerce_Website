@@ -15,7 +15,7 @@ namespace OnLineShop.IServices
         List<SelectListItem> Getspecialtag();
         List<SelectListItem> GetspecialtagById(int id);
         List<SelectListItem> GetProductTypesById(int id);
-        Task<List<Products>> ProductPriceRange(decimal loweramount, decimal highamount);
+        Task<List<Products>> ProductPriceRange(decimal? loweramount, decimal? highamount);
 
     }
 }

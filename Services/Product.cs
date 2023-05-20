@@ -165,13 +165,18 @@ namespace OnLineShop.Services
                             obj = new Products()
                             {
                                 Id = (int)rows["product_id"],
-                                Name = (string)rows["product_name"],
+                                Name = rows["product_name"] != DBNull.Value ? (string)rows["product_name"] : string.Empty,
                                 Price = (decimal)rows["product_price"],
                                 Image = rows["product_image"].ToString(),
                                 ProductColor = rows["product_color"].ToString(),
                                 IsAvailable = (bool)rows["isavailable"],
                                 
                             };
+                            obj.ProductType_prop = new Product_Type
+                            {
+                                Producttype = rows["producttype"].ToString()
+                            };
+                            
                         }
                     }
 
@@ -337,7 +342,7 @@ namespace OnLineShop.Services
                  
             }
 
-        public async Task<List<Products>> ProductPriceRange(decimal loweramount, decimal highamount)
+        public async Task<List<Products>> ProductPriceRange(decimal? loweramount, decimal? highamount)
         {
             using (MySqlConnection conn = new MySqlConnection(str))
             {

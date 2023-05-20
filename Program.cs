@@ -11,7 +11,12 @@ var services=builder.Services;
 services.AddScoped<IProductTypes, ProductType>();
 services.AddScoped<ISpecialTag,SpecialTag_implement>();
 services.AddScoped<IProduct, Product>();
-
+services.AddSession(options =>
+{
+    //options.Cookie.Name = ".AdventureWorks.Session";
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.IsEssential = true;
+});
 
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -44,7 +49,7 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseSession();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(

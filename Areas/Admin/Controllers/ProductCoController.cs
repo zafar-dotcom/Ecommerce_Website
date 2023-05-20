@@ -26,8 +26,13 @@ namespace OnLineShop.Areas.Admin.Controllers
 
         // filter thins based on price
         [HttpPost]
-        public async Task<IActionResult> Index(decimal loweramount,decimal higheramount)
+        public async Task<IActionResult> Index(decimal? loweramount,decimal? higheramount)
         {
+            if(loweramount==null || higheramount == null)
+            {
+                var list = _dal.ProductList();
+                return View(list);
+            }
             var lst =await _dal.ProductPriceRange(loweramount, higheramount);
             return View(lst);
 

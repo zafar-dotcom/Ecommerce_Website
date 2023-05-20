@@ -1,4 +1,20 @@
-﻿<!DOCTYPE html>
+﻿@using System.Net.Http;
+                @*utilty use to serilized data from string into byte[]*@
+@using OnLineShop.Utility;
+@using Microsoft.AspNetCore.Http;
+                    @*IHttpContextAccesso rto use seeion get method in cshtml*@
+@inject IHttpContextAccessor Httpcontentaccessor;
+@{
+    int count = 0;
+    List<Products> productlist = Httpcontentaccessor.HttpContext.Session.Get<List<Products>>("products");
+    if (productlist == null)
+    {
+        productlist = new List<Products>();
+    }
+    count = productlist.Count();
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -7,11 +23,18 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/OnLineShop.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+    <link href="~/lib/alertify.js/alertify.bootstrap.css" rel="stylesheet" />
+    <link href="~/lib/alertify.js/alertify.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/alertify.js/alertify.core.css" rel="stylesheet" />
+    <link href="~/lib/alertify.js/alertify.core.min.css" rel="stylesheet" /> 
+   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css" />  
+    <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 ">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">OnLineShop</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -28,6 +51,11 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Admin" asp-controller="ProductCo" asp-action="Index">Product</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Customer" asp-controller="Home" asp-action="Cart">
+                                <i class="fa-solid fa-cart-shopping"></i>(@count)
+                                </a>
                         </li>
                         
                     </ul>
@@ -47,9 +75,20 @@
             &copy; 2023 - OnLineShop - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/alertify.js/alertify.js"></script>
+    <script src="~/lib/alertify.js/alertify.min.js"></script>
+     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+   
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
