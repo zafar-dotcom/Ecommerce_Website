@@ -40,16 +40,33 @@
             }
         </tbody>
     </table>
+    <div class="text-end">
+        <div class="total-amount">
+            <h4>Total Amount</h4>
+            <h4>Grand Total: @Model.Sum(c => c.Price)</h4>
+        </div>
+    
+    </div>
+    <div class=" text-end">
+        <a asp-area="Customer" asp-action="Index" asp-controller="Home"  class="btn btn-success">Back to List</a>
+        <a asp-area="Customer" asp-action="Checkout" asp-controller="Order" class="btn btn-info">Process to Checkout</a>
+    </div>
+  
+    
 </div>
-<div class="row">
+
+
+@*<div class="row">
     <div class="col-8">       
     </div>
+    
     <div class="col-2 text-end" >
-        <a asp-area="Customer" asp-action="Index" asp-controller="Home" style="margin-top:75px"  class="btn btn-success">Back to List</a>
+        <a asp-area="Customer" asp-action="Index" asp-controller="Home" style="margin-top:100px"  class="btn btn-success">Back to List</a>
     </div>
     <div class="col-2 text-end">
         <h4>Total Amount </h4>
         <h4>Grand Total : @Model.Sum(c=>c.Price)</h4>
-        <a asp-action="Index" asp-controller="Home" class="btn btn-info">Process to checkout</a>
+        <a asp-area="Customer" asp-action="Checkout" asp-controller="Order" class="btn btn-info">Process to checkout</a>
     </div>
-</div>
+    
+</div>*@

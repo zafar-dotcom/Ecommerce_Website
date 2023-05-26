@@ -5,6 +5,7 @@ using OnLineShop.Models;
 using OnLineShop.Utility;
 using System.Collections.Concurrent;
 using System.Diagnostics;
+using X.PagedList;
 
 namespace OnLineShop.Areas.Customer.Controllers
 {
@@ -22,10 +23,13 @@ namespace OnLineShop.Areas.Customer.Controllers
             _dal= dal;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int? page)
         {
-            List<Products> lst = _dal.ProductList(); 
-            return View(lst);
+            List<Products> productList = _dal.ProductList();
+            int pageSize = 9;
+            int pageNumber = page ?? 1;
+            IPagedList<Products> pagedList = productList.ToPagedList(pageNumber, pageSize);
+            return View(pagedList);
         }
 
         public IActionResult Privacy()

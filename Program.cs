@@ -7,10 +7,12 @@ using OnLineShop.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 var services=builder.Services;
+
 // Add services to the container.
 services.AddScoped<IProductTypes, ProductType>();
 services.AddScoped<ISpecialTag,SpecialTag_implement>();
 services.AddScoped<IProduct, Product>();
+services.AddScoped<IOrder, Order_Implement>();
 services.AddSession(options =>
 {
     //options.Cookie.Name = ".AdventureWorks.Session";

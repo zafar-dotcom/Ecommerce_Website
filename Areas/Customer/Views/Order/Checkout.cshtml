@@ -1,0 +1,152 @@
+﻿
+@using OnLineShop.Models;
+@model Order;
+@using Microsoft.AspNetCore.Http;
+@using OnLineShop.Utility;
+@inject IHttpContextAccessor httpcontextaccessor;
+@{
+    List<Products> products=httpcontextaccessor.HttpContext.Session.Get<List<Products>>("products");
+    if (products == null)
+    {
+        products = new List<Products>();
+    }
+}
+
+<br />
+<head>
+    
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+</head>
+<div class="row">
+    <form asp-action="Checkout" method="post">
+        <div class="p-4 rounder border row">
+       <div class="col-6">
+            <div class="form-group row">
+                <div class="col-2">
+                <label asp-for="Name"></label>
+                </div>
+                <div class="col-6">
+                        <input asp-for="Name" class="form-control form-control-sm mandatory-field" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+            <div class="form-group row">
+                <div class="col-2">
+                    <label asp-for="PhoneNo"></label>
+                </div>
+                <div class="col-6">
+                        <input asp-for="PhoneNo" class="form-control form-control-sm mandatory-field" />
+                        <span asp-validation-for="PhoneNo" class="text-danger"></span>
+                </div>
+            </div>
+                <br />
+            <div class="form-group row">
+                <div class="col-2">
+                    <label asp-for="Email"></label>
+                </div>
+                <div class="col-6">
+                        <input asp-for="Email" class="form-control form-control-sm mandatory-field" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+                <br />
+            <div class="form-group row">
+                <div class="col-2">
+                    <label asp-for="Address"></label>
+                </div>
+                <div class="col-6">
+                        <input asp-for="Address" class="form-control form-control-sm mandatory-field" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+            </div>
+                <br />
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label asp-for="OrderDate"></label>
+                    </div>
+                    <div class="col-6">
+                        <input type="datetime"  id="datepicker">
+@*                        <input asp-for="OrderDate"  readonly="readonly" class="form-control form-control-sm mandatory-field" />*@
+                        <span asp-validation-for="OrderDate" class="text-danger"></span>
+                    </div>
+                </div>
+                <br />
+               
+       </div>
+       <div class="col-6">
+                
+                   
+           <table class="table table-bordered">
+               <thead>
+                    <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                    </tr>
+               </thead>
+               <tbody>
+                    @foreach(var item in products)
+                    {
+                        <tr>
+                            <td> <img src="~/@item.Image" width="150px" height="100px" /></td>
+                     <td>@item.Name</td>
+                     <td>@item.Price</td>
+                        </tr>
+                    }
+                </tbody>
+           </table>
+                   
+                 
+                <div class="text-end">
+                    @if(products == null)
+                    {
+                        <h3> No item selected</h3>
+                        
+                    }
+                    else
+                    {
+                        <h3>Total Price :@products.Sum(c=>c.Price)  </h3>
+                    }
+                    <input type="submit" id="submitButton" class="btn btn-primary" value="Submit" style="margin-right:6px" />
+                </div>
+                   
+        
+
+            </div>
+        </div>
+   </form>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        //date picker code from jquery ui 
+        $("#datepicker").datepicker({
+            showAnim: "blind",
+            changeMonth: true,
+            changeYear: true
+        });
+        
+        // Disable submit button initially
+        $("#submitButton").prop("disabled", true);
+
+        // Check mandatory fields on input change
+        $(".mandatory-field").on("input", function () {
+            var allFieldsEmpty = true;
+
+            // Check if any mandatory field is not empty
+            $(".mandatory-field").each(function () {
+                if ($(this).val().trim() === "") {
+                    allFieldsEmpty = false;
+                    return false; // Exit the loop if a non-empty field is found
+                }
+            });
+
+            // Enable/disable submit button based on field values
+            $("#submitButton").prop("disabled", !allFieldsEmpty);
+        });
+    });
+</script>
+

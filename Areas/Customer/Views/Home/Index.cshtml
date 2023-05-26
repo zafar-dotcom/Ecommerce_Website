@@ -3,7 +3,9 @@
 }
 
 @using OnLineShop.Models;
-@model List<Products>
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
+@model X.PagedList.IPagedList<Products>
 
 <br />
 <br />
@@ -32,3 +34,15 @@
         </div>
     }
 </div>
+<div>
+   @* @Html.PagedListPager(Model, page => Url.Content("~/Customer/Home/Index?page=" + page), PagedListRenderOptions.PageNumbersOnly)*@
+    @Html.PagedListPager(Model, page => Url.Content("~/Customer/Home/Index?page=" + page), PagedListRenderOptions.MinimalWithItemCountText)
+</div>
+
+
+
+
+        @*@Html.PagedListPager(Model, page => Url.Content("~/Customer/Home/Index?page=" + page))*@
+    
+
+   @* @Html.PagedListPager(Model,generatePageUrl:c=>Href(contentPath: "~/Customer/Home/Index?page=" +));*@
