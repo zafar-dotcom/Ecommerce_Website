@@ -13,6 +13,7 @@ services.AddScoped<IProductTypes, ProductType>();
 services.AddScoped<ISpecialTag,SpecialTag_implement>();
 services.AddScoped<IProduct, Product>();
 services.AddScoped<IOrder, Order_Implement>();
+services.AddScoped<IUserRegister,UserRegister_implement>();
 services.AddSession(options =>
 {
     //options.Cookie.Name = ".AdventureWorks.Session";
@@ -23,11 +24,11 @@ services.AddSession(options =>
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-   options.UseSqlServer(connectionString));
+  options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+   .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

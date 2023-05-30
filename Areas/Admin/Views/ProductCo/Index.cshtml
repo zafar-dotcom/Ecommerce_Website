@@ -99,7 +99,7 @@
         
         
         $( function () {
-
+            var loginsuccess = '@TempData["loginflag"]';
                 var succ = '@TempData["delsuccalert"]';
                 var fail = '@TempData["delfailalert"]';
                 var productcreated = '@TempData["createalert"]';
@@ -140,6 +140,12 @@
 
 
                 }
+            if (loginsuccess === "login"){
+                var loginmessage = '@TempData["LoginSuccess"]';
+                if (loginmessage!=null){
+                    alertify.success(loginmessage);
+                }
+            }
 
 
             }
